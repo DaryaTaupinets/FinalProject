@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto, Authentication authentication) {
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto) {
         User user = UserMapper.toModel(userDto);
         user.setRoles(roleService.mapRoleNamesToRoles(userDto.getRoles()));
         return ResponseEntity.ok(UserMapper.toDto(userService.create(user)));
@@ -46,8 +46,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> update(@PathVariable("id") int userId,
-            @RequestBody @Valid UserDto userDto,
-            Authentication authentication) {
+            @RequestBody @Valid UserDto userDto) {
         User user = UserMapper.toModel(userDto);
         user.setId(userId);
         user.setRoles(roleService.mapRoleNamesToRoles(userDto.getRoles()));
@@ -56,13 +55,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") int userId, Authentication authentication) {
+    public ResponseEntity<Void> delete(@PathVariable("id") int userId) {
         userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> get(@PathVariable("id") int userId, Authentication authentication) {
+    public ResponseEntity<UserDto> get(@PathVariable("id") int userId) {
         return ResponseEntity.ok(UserMapper.toDto(userService.findById(userId)));
     }
 
@@ -72,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAll(Authentication authentication) {
+    public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(UserMapper.toDto(userService.findAll()));
     }
 }

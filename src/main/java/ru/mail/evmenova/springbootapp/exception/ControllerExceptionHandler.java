@@ -12,7 +12,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 @ControllerAdvice(basePackages = "ru.mail.evmenova.springbootapp.controller")
-public class ApiExceptionHandler {
+public class ControllerExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<String> handleRestException(ApiException exception) {
         return new ResponseEntity<>(Optional.ofNullable(exception.getMessage()).orElse("Something went wrong."),
